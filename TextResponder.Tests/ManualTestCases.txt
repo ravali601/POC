@@ -1,0 +1,229 @@
+﻿# ------------------------------------------------------------
+
+# TextResponder – Manual Test Cases & Project Documentation
+
+# ------------------------------------------------------------
+
+This document contains:
+
+1. Project Overview
+2. UI Manual Test Cases
+3. API Manual Test Cases
+4. Service Layer Manual Test Cases
+5. Model Validation Test Cases
+6. Summary
+
+
+---
+
+# 1. Project Overview
+
+---
+
+TextResponder is a small ASP.NET Core MVC application that communicates with an internal Web API.
+
+The MVC UI:
+
+* Accepts user input through a text field.
+* Validates the input using DataAnnotations.
+* Sends the validated text to the API using HttpClient.
+
+The Web API:
+
+* Receives a text payload.
+* Validates the input again.
+* Returns the same value in the response.
+
+The project demonstrates:
+
+* A simple MVC UI with validation
+* A Web API endpoint
+* HttpClient communication
+* Separation of concerns using a service layer
+* Unit testing across controllers, API, services, and models
+
+The project uses:
+
+* ASP.NET Core MVC
+* .NET 9
+* No database or persistence layer
+
+---
+
+# 2. UI Manual Test Cases
+
+---
+
+Test Case 1: Load the Index Page
+Steps:
+
+1. Launch the application.
+2. Navigate to the root URL ("/").
+   Expected Result:
+   The page loads with a textbox, validation message area, and a submit button.
+
+---
+
+Test Case 2: Submit Empty Input
+Steps:
+
+1. Leave the text field empty.
+2. Click Submit.
+   Expected Result:
+   A validation message appears: "Please enter some text."
+   No response box is displayed.
+
+---
+
+Test Case 3: Submit Invalid Characters
+Input Examples:
+
+* abc def
+* hello@
+* <>
+* hello 123
+  Steps:
+
+1. Enter any invalid input.
+2. Click Submit.
+   Expected Result:
+   A validation message appears: "Use letters and numbers only."
+   Any previous response should be hidden.
+
+---
+
+Test Case 4: Submit Valid Input
+Input Examples:
+
+* abc123
+* HELLO
+* Test9
+  Steps:
+
+1. Enter valid alphanumeric input.
+2. Click Submit.
+   Expected Result:
+   A green panel appears showing:
+   Response: <entered value>
+
+---
+
+Test Case 5: Response Panel Should Hide After Invalid Input
+Steps:
+
+1. Submit valid input (response appears).
+2. Enter invalid input.
+3. Click Submit.
+   Expected Result:
+   A validation message appears.
+   The old API response should not be displayed.
+
+---
+
+# 3. API Manual Test Cases
+
+---
+
+API Endpoint: POST /api/message/send
+Request Body Format:
+{ "text": "<value>" }
+
+---
+
+Test Case 6: Valid API Request
+Input:
+{ "text": "Hello123" }
+Expected Response:
+Status: 200 OK
+Body: { "text": "Hello123" }
+
+---
+
+Test Case 7: Empty Text in API Request
+Input:
+{ "text": "" }
+Expected Response:
+Status: 400 BadRequest
+Validation errors returned.
+
+---
+
+Test Case 8: Special Characters in API Request
+Input:
+{ "text": "Hi @" }
+Expected Response:
+Status: 400 BadRequest
+Validation error: alphanumeric characters only.
+
+---
+
+Test Case 9: API Should Return Same Value Back
+Input:
+{ "text": "Ping123" }
+Expected Response:
+Status: 200 OK
+Body: { "text": "Ping123" }
+
+---
+
+# 4. Service Layer Manual Test Cases
+
+---
+
+MessageService uses HttpClient to call the API.
+
+---
+
+Test Case 10: Successful Service Call
+Setup:
+The API returns HTTP 200 with body { "text": "Test" }.
+Steps:
+Call SendAsync("Test").
+Expected Result:
+MessageResult returned with Text = "Test".
+
+---
+
+Test Case 11: API Error Causes Exception
+Setup:
+The API returns any non-success status code (e.g., 400).
+Steps:
+Call SendAsync("abc").
+Expected Result:
+HttpRequestException is thrown because of EnsureSuccessStatusCode().
+
+---
+
+# 5. Model Validation Test Cases
+
+---
+
+Model: MessageInput
+Validation Rules:
+
+* Text is required.
+* Text must contain only letters and numbers.
+
+---
+
+Test Case 12: Empty Input Fails Validation
+Input: ""
+Expected Result: Validation fails.
+
+---
+
+Test Case 13: Special Characters Fail Validation
+Inputs:
+
+* hello world
+* abc@123
+  Expected Result: Validation fails.
+
+---
+
+Test Case 14: Valid Input Passes Validation
+Inputs:
+
+* abc123
+* HELLO
+  Expected Result: Validation succeeds.

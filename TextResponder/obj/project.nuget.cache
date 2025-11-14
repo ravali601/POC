@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "Wjbz2K0TwCw=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\SBTS\\Documents\\POC\\POC\\TextResponder\\TextResponder.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SBTS\\.nuget\\packages\\microsoft.openapi\\2.3.0\\microsoft.openapi.2.3.0.nupkg.sha512",
+    "C:\\Users\\SBTS\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.0.1\\swashbuckle.aspnetcore.swagger.10.0.1.nupkg.sha512",
+    "C:\\Users\\SBTS\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.0.1\\swashbuckle.aspnetcore.swaggergen.10.0.1.nupkg.sha512",
+    "C:\\Users\\SBTS\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\10.0.1\\swashbuckle.aspnetcore.swaggerui.10.0.1.nupkg.sha512",
+    "C:\\Users\\SBTS\\.nuget\\packages\\system.text.json\\8.0.5\\system.text.json.8.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

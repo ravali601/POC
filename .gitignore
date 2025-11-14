@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/TextResponder/.vs
+/TextResponder/bin/Debug/net9.0
+/TextResponder/obj/Debug/net9.0
+/TextResponder/obj/Release/net9.0

@@ -1,0 +1,44 @@
+﻿@model TextResponder.Models.MessageInput
+
+@{
+    ViewData["Title"] = "Submit Text";
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="mb-3">Submit Text</h2>
+
+    <form asp-action="Index" method="post">
+        <div class="mb-3">
+            <label for="textInput" class="form-label">Enter Text</label>
+            <input asp-for="Text" id="textInput" class="form-control" placeholder="Type letters or numbers..." />
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    @if (ViewBag.ShowResponse == true)
+    {
+        <div class="alert alert-success mt-4 alert-response">
+            <strong>Response:</strong> @ViewBag.Response
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function () {
+
+            // hide the old response whenever text becomes invalid
+            $('#textInput').on('input', function () {
+                if (!$(this).closest('form').valid()) {
+                    $('.alert-response, .alert-success').hide();
+                }
+            });
+
+        });
+    </script>
+}
+
